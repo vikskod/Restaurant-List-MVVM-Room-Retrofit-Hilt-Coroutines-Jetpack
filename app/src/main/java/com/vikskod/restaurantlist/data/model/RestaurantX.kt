@@ -4,6 +4,7 @@ package com.vikskod.abbostsfordrestaurant.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "tbl_restaurant")
 data class RestaurantX(
@@ -20,5 +21,5 @@ data class RestaurantX(
     @SerializedName("name")
     val name: String,
 
-    var isFavourite : Boolean
-)
+    var isFavourite: Boolean
+) : Serializable

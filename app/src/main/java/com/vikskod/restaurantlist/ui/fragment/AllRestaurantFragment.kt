@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vikskod.abbostsfordrestaurant.data.model.RestaurantX
 import com.vikskod.restaurantlist.R
@@ -52,6 +53,17 @@ class AllRestaurantFragment : Fragment() {
         restaurantAdapter.setOnItemClickListener { restaurant, isLiked ->
             viewModel.setFavouriteRestaurant(restaurant)
         }
+
+        restaurantAdapter.setOnContainerClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("selected_restaurant", it)
+                putString("title", it.name.trim())      // passing title as an argument to set restaurant title on toolbar
+            }
+            findNavController().navigate(
+                R.id.action_allRestaurantFragment_to_restaurantDetailFragment,
+                bundle
+            )
+        }
     }
 
     private fun setupObservers() {
@@ -68,10 +80,8 @@ class AllRestaurantFragment : Fragment() {
 
                         if (finalData.isEmpty()) {
                             showEmptyMessage(true)
-                            restaurantAdapter.clear()
-                        } else {
-                            restaurantAdapter.setAdapter(finalData)
                         }
+                        restaurantAdapter.differ.submitList(finalData)
                     }
                 }
                 Resource.Status.ERROR -> {

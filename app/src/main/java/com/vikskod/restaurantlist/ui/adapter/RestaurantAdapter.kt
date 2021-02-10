@@ -2,6 +2,8 @@ package com.vikskod.restaurantlist.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.like.LikeButton
@@ -13,19 +15,17 @@ import java.util.*
 class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
     // Helper for computing the difference between two lists
-    /*private val callback = object : DiffUtil.ItemCallback<Restaurant>() {
-        override fun areItemsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
-            return oldItem.restaurant.id == newItem.restaurant.id
+    private val callback = object : DiffUtil.ItemCallback<RestaurantX>() {
+        override fun areItemsTheSame(oldItem: RestaurantX, newItem: RestaurantX): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
+        override fun areContentsTheSame(oldItem: RestaurantX, newItem: RestaurantX): Boolean {
             return oldItem == newItem
         }
     }
 
-    val differ = AsyncListDiffer(this, callback)*/
-
-    private var finalData = ArrayList<RestaurantX>()
+    val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         val binding =
@@ -34,30 +34,12 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantVie
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        val restaurant = finalData[position]
+        val restaurant = differ.currentList[position]
         holder.bind(restaurant)
     }
 
     override fun getItemCount(): Int {
-        return finalData.size
-    }
-
-    fun setAdapter(data: ArrayList<RestaurantX>) {
-        finalData.clear()
-        finalData = data
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        finalData.clear()
-        notifyDataSetChanged()
-    }
-
-    fun removeItem(restaurant: RestaurantX) {
-        finalData.removeAll {
-            it == restaurant
-        }
-        notifyDataSetChanged()
+        return differ.currentList.size
     }
 
     inner class RestaurantViewHolder(private val binding: RvListRestaurantBinding) :
@@ -82,14 +64,25 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantVie
                 }
             })
 
-            Glide.with(binding.ivBackground.context)
+            Glide.with(binding.ivBanner.context)
                 .load(restaurantX.featuredImage)
-                .into(binding.ivBackground)
+                .into(binding.ivBanner)
+
+            binding.rlContainer.setOnClickListener {
+                onContainerClickListener?.let {
+                    it(restaurantX)
+                }
+            }
         }
     }
 
     private var onItemClickListener: ((RestaurantX, Boolean) -> Unit)? = null
     fun setOnItemClickListener(listener: (RestaurantX, Boolean) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onContainerClickListener: ((RestaurantX) -> Unit)? = null
+    fun setOnContainerClickListener(listener: (RestaurantX) -> Unit) {
+        onContainerClickListener = listener
     }
 }

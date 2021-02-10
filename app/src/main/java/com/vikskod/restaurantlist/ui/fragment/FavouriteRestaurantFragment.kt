@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vikskod.abbostsfordrestaurant.data.model.RestaurantX
 import com.vikskod.restaurantlist.R
@@ -49,10 +50,17 @@ class FavouriteRestaurantFragment : Fragment() {
 
         restaurantAdapter.setOnItemClickListener { restaurant, isLiked ->
             viewModel.setFavouriteRestaurant(restaurant)
-            //Remove item from recycler view if it's not liked
-            if (!isLiked) {
-                restaurantAdapter.removeItem(restaurant)
+        }
+
+        restaurantAdapter.setOnContainerClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("selected_restaurant", it)
+                putString("title", it.name.trim())      // passing title as an argument to set restaurant title on toolbar
             }
+            findNavController().navigate(
+                R.id.action_favouriteRestaurantFragment_to_restaurantDetailFragment,
+                bundle
+            )
         }
     }
 
@@ -61,13 +69,11 @@ class FavouriteRestaurantFragment : Fragment() {
         showProgressBar(true)
         viewModel.getFavouriteRestaurant.observe(viewLifecycleOwner, {
             showProgressBar(false)
-            if (!it.isNullOrEmpty()) {
-                restaurantAdapter.setAdapter(it as ArrayList<RestaurantX>)
-            } else {
+            if (it.isNullOrEmpty()) {
                 // Data is empty
                 showEmptyMessage(true)
-                restaurantAdapter.clear()
             }
+            restaurantAdapter.differ.submitList(it)
         })
     }
 
