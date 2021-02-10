@@ -1,3 +1,10 @@
 # Restaurant-List
 
-### Android Sample Project using MVVM, LiveData, Databinding, Retrofit, Room, Hilt Dagger and Coroutines
+### Android Sample Project using
+- MVVM
+- LiveData
+- Databinding
+- Retrofit
+- Room
+- Hilt Dependency Injection
+- Coroutines
