@@ -1,4 +1,4 @@
-package com.vikskod.restaurantlist
+package com.vikskod.restaurantlist.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,8 +12,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.vikskod.restaurantlist.R
 import com.vikskod.restaurantlist.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setupViews()
     }
 
-    fun setupViews() {
+    private fun setupViews() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragNavHost) as NavHostFragment
         navController = navHostFragment.navController
@@ -35,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration =
             AppBarConfiguration(setOf(R.id.allRestaurantFragment, R.id.favouriteRestaurantFragment))
         setupActionBarWithNavController(navHostFragment.navController, appBarConfiguration)
+        //Don't reload selected fragment
+        binding.bottomNavView.setOnNavigationItemReselectedListener { }
     }
 
     fun showBottomNavigation() {

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/allRestaurantFragment"
-        android:name="com.vikskod.restaurantlist.AllRestaurantFragment"
+        android:name="com.vikskod.restaurantlist.ui.fragment.AllRestaurantFragment"
         android:label="Restaurants"
-        tools:layout="@layout/fragment_all_restaurant" />
+        tools:layout="@layout/fragment_restaurant" />
     <fragment
         android:id="@+id/favouriteRestaurantFragment"
-        android:name="com.vikskod.restaurantlist.FavouriteRestaurantFragment"
+        android:name="com.vikskod.restaurantlist.ui.fragment.FavouriteRestaurantFragment"
         android:label="Favourites"
-        tools:layout="@layout/fragment_favourite_restaurant" />
+        tools:layout="@layout/fragment_restaurant" />
 </navigation>
