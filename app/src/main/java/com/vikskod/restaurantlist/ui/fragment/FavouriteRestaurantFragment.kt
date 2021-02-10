@@ -47,8 +47,12 @@ class FavouriteRestaurantFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        restaurantAdapter.setOnItemClickListener {
-            viewModel.setFavouriteRestaurant(it)
+        restaurantAdapter.setOnItemClickListener { restaurant, isLiked ->
+            viewModel.setFavouriteRestaurant(restaurant)
+            //Remove item from recycler view if it's not liked
+            if (!isLiked) {
+                restaurantAdapter.removeItem(restaurant)
+            }
         }
     }
 
@@ -62,7 +66,7 @@ class FavouriteRestaurantFragment : Fragment() {
             } else {
                 // Data is empty
                 showEmptyMessage(true)
-                restaurantAdapter.clearAdapter()
+                restaurantAdapter.clear()
             }
         })
     }

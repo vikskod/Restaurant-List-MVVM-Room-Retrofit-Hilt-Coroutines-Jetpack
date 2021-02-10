@@ -48,8 +48,15 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantVie
         notifyDataSetChanged()
     }
 
-    fun clearAdapter() {
+    fun clear() {
         finalData.clear()
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(restaurant: RestaurantX) {
+        finalData.removeAll {
+            it == restaurant
+        }
         notifyDataSetChanged()
     }
 
@@ -63,14 +70,14 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantVie
                 override fun liked(likeButton: LikeButton) {
                     restaurantX.isFavourite = true
                     onItemClickListener?.let {
-                        it(restaurantX)
+                        it(restaurantX, true)
                     }
                 }
 
                 override fun unLiked(likeButton: LikeButton) {
                     restaurantX.isFavourite = false
                     onItemClickListener?.let {
-                        it(restaurantX)
+                        it(restaurantX, false)
                     }
                 }
             })
@@ -81,8 +88,8 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantVie
         }
     }
 
-    private var onItemClickListener: ((RestaurantX) -> Unit)? = null
-    fun setOnItemClickListener(listener: (RestaurantX) -> Unit) {
+    private var onItemClickListener: ((RestaurantX, Boolean) -> Unit)? = null
+    fun setOnItemClickListener(listener: (RestaurantX, Boolean) -> Unit) {
         onItemClickListener = listener
     }
 }

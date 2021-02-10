@@ -49,8 +49,8 @@ class AllRestaurantFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        restaurantAdapter.setOnItemClickListener {it->
-            viewModel.setFavouriteRestaurant(it)
+        restaurantAdapter.setOnItemClickListener { restaurant, isLiked ->
+            viewModel.setFavouriteRestaurant(restaurant)
         }
     }
 
@@ -68,7 +68,7 @@ class AllRestaurantFragment : Fragment() {
 
                         if (finalData.isEmpty()) {
                             showEmptyMessage(true)
-                            restaurantAdapter.clearAdapter()
+                            restaurantAdapter.clear()
                         } else {
                             restaurantAdapter.setAdapter(finalData)
                         }
