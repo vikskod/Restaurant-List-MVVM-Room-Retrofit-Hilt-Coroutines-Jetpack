@@ -10,8 +10,7 @@ import com.vikskod.abbostsfordrestaurant.data.model.RestaurantX
 import com.vikskod.restaurantlist.databinding.RvListRestaurantBinding
 import java.util.*
 
-class RestaurantAdapter() :
-    RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
+class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
     // Helper for computing the difference between two lists
     /*private val callback = object : DiffUtil.ItemCallback<Restaurant>() {
@@ -63,11 +62,16 @@ class RestaurantAdapter() :
             binding.btnLike.setOnLikeListener(object : OnLikeListener {
                 override fun liked(likeButton: LikeButton) {
                     restaurantX.isFavourite = true
-
+                    onItemClickListener?.let {
+                        it(restaurantX)
+                    }
                 }
 
                 override fun unLiked(likeButton: LikeButton) {
                     restaurantX.isFavourite = false
+                    onItemClickListener?.let {
+                        it(restaurantX)
+                    }
                 }
             })
 
@@ -75,5 +79,10 @@ class RestaurantAdapter() :
                 .load(restaurantX.featuredImage)
                 .into(binding.ivBackground)
         }
+    }
+
+    private var onItemClickListener: ((RestaurantX) -> Unit)? = null
+    fun setOnItemClickListener(listener: (RestaurantX) -> Unit) {
+        onItemClickListener = listener
     }
 }

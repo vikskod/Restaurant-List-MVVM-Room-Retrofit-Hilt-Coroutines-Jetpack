@@ -46,6 +46,10 @@ class FavouriteRestaurantFragment : Fragment() {
             adapter = restaurantAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        restaurantAdapter.setOnItemClickListener {
+            viewModel.setFavouriteRestaurant(it)
+        }
     }
 
     private fun setupObservers() {

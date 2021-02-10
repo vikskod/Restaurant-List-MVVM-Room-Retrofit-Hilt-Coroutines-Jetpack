@@ -10,7 +10,7 @@ interface RestaurantDao {
     @Query("SELECT * FROM tbl_restaurant")
     fun getAllRestaurant(): LiveData<List<RestaurantX>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(restaurant: List<RestaurantX>)
 
     @Update

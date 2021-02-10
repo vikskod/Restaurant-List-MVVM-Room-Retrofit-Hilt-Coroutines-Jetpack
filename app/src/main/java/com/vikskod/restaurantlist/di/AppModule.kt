@@ -1,5 +1,6 @@
 package com.vikskod.restaurantlist.di
 
+import com.vikskod.abbostsfordrestaurant.data.model.RestaurantX
 import com.vikskod.restaurantlist.data.local.RestaurantDao
 import com.vikskod.restaurantlist.data.remote.RestaurantRemoteDataSource
 import com.vikskod.restaurantlist.repository.RestaurantRepository
@@ -8,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.ArrayList
 import javax.inject.Singleton
 
 

@@ -48,6 +48,10 @@ class AllRestaurantFragment : Fragment() {
             adapter = restaurantAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        restaurantAdapter.setOnItemClickListener {it->
+            viewModel.setFavouriteRestaurant(it)
+        }
     }
 
     private fun setupObservers() {
@@ -65,7 +69,9 @@ class AllRestaurantFragment : Fragment() {
                         if (finalData.isEmpty()) {
                             showEmptyMessage(true)
                             restaurantAdapter.clearAdapter()
-                        } else restaurantAdapter.setAdapter(finalData)
+                        } else {
+                            restaurantAdapter.setAdapter(finalData)
+                        }
                     }
                 }
                 Resource.Status.ERROR -> {
