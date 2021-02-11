@@ -30,6 +30,5 @@ class AppModule {
     ) = RestaurantRepository(remoteDataSource, restaurantDao)
 
     @Provides
-    @Singleton
     fun provideRestaurantAdapter(): RestaurantAdapter = RestaurantAdapter()
 }
