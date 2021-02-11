@@ -9,6 +9,8 @@
 - Hilt Dependency Injection
 - Coroutines
 
+Thanks to Zomato for providing API
+
 <p align="left">
   <img src="https://github.com/vikskod/Restaurant-List/blob/master/screenshots/sc1.png" width="300" title="Restaurant List">
   <img src="https://github.com/vikskod/Restaurant-List/blob/master/screenshots/sc2.png" width="300" title="Favourite Restaurant">
